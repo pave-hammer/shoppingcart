@@ -4,6 +4,12 @@ import CartItem from './cartitem.js';
 class CartItems extends Component {
 
     render() {
+        const cartItems = this.props.cartItemList.map(item => {
+            return (
+                <CartItem key={item.id} product={item.product} quantity={item.quantity} />
+            )
+        })
+        // console.log(this.props)
         return (
             <div className="container">
                 <h1>Cart Items</h1>
@@ -16,6 +22,9 @@ class CartItems extends Component {
                         </div>
                     </div>
                 </div>
+            <div>
+                {cartItems}
+            </div>
             </div>
         )
     }

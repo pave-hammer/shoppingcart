@@ -23,7 +23,7 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <CartItems key={  }cartItemList={ cartItemList } />
+        <CartItems cartItemList={ cartItemList } />
         <CartFooter copyright={ copyright } crDate={ crDate } />
       </div>
     );
