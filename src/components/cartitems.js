@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import CartItem from './cartitem.js';
 
 class CartItems extends Component {
-
     render() {
+        console.log(this.props)
         const cartItems = this.props.cartItemList.map(item => {
             return (
-                <CartItem key={item.id} product={item.product} quantity={item.quantity} />
+                <CartItem key={item.product.id} product={item.product} quantity={item.quantity} />
             )
         })
         // console.log(this.props)
@@ -22,9 +22,9 @@ class CartItems extends Component {
                         </div>
                     </div>
                 </div>
-            <div>
-                {cartItems}
-            </div>
+                <div>
+                    {cartItems}
+                </div>
             </div>
         )
     }
