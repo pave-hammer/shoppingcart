@@ -23,6 +23,7 @@ class App extends Component {
       currentOrder: [],
       selected: "",
       total: [],
+      noTotal: "000"
     }
   }
 
@@ -36,14 +37,6 @@ class App extends Component {
     this.setState({
       currentQuantity: event.target.value
     })
-  }
-
-  getTotal = (totals) => {
-    const result = totals.length > 1 ? totals.reduce((a, b) => {return a + b}, 0) : totals[0]
-    // console.log("total", this.state.total)
-    // console.log("current order", this.state.currentOrder)
-    // console.log("result", result)
-    return <h4>Total: ${(result / 100).toFixed(2)}</h4>
   }
 
   onSubmit = (event) => { 
@@ -62,9 +55,6 @@ class App extends Component {
         order.product.name = this.state.selected
         order.product.price = (data.priceInCents * this.state.currentQuantity) 
         order.quantity = this.state.currentQuantity
-        // this.setState({
-        //   total: [...this.state.total, order.product.price]
-        // }, console.log("total updated to:", this.state.total))
       }
     })
     this.setState({
@@ -81,7 +71,7 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <CartItems cartItemList={ this.state.currentOrder } getTotal={ this.getTotal } total={ this.state.total }/>
+        <CartItems cartItemList={ this.state.currentOrder } total={ this.state.total } noTotal={ this.state.noTotal }/>
         <AddItem products={ this.state.product } onSubmit={ this.onSubmit } onChange={ this.onChange } onSelect={this.onSelect} />
         <CartFooter copyright={ copyright } crDate={ crDate } />
       </div>

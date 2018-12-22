@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import CartItem from './cartitem.js';
 
 class CartItems extends Component {
-    // componentDidUpdate() {
-    //     this.props.getTotal(this.props.total)
-    // }
+
+    getTotal = (totals) => {
+        const result = totals.length >= 1 ? totals.reduce((a, b) => {return a + b}, 0) : this.props.noTotal
+        return <h5>Total: ${(result / 100).toFixed(2)}</h5>
+    }
 
     render() {
         // console.log(this.props)
-        const getTotal = this.c
+        const calcTotal = this.getTotal(this.props.total)
         const cartItems = this.props.cartItemList.map(item => {
             return (
                 <CartItem key={item.product.id} product={item.product} quantity={item.quantity} />
             )
         })
+
         return (
             <div className="container">
                 <h1>Cart Items</h1>
@@ -28,7 +31,7 @@ class CartItems extends Component {
                 </div>
                 <div>
                     {cartItems}
-                    {this.props.getTotal(this.props.total)}
+                    {calcTotal}
                 </div>
             </div>
         )
