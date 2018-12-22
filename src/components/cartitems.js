@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import CartItem from './cartitem.js';
 
 class CartItems extends Component {
+    // componentDidUpdate() {
+    //     this.props.getTotal(this.props.total)
+    // }
+
     render() {
-        console.log(this.props)
+        // console.log(this.props)
+        const getTotal = this.c
         const cartItems = this.props.cartItemList.map(item => {
             return (
                 <CartItem key={item.product.id} product={item.product} quantity={item.quantity} />
             )
         })
-        // console.log(this.props)
         return (
             <div className="container">
                 <h1>Cart Items</h1>
@@ -24,6 +28,7 @@ class CartItems extends Component {
                 </div>
                 <div>
                     {cartItems}
+                    {this.props.getTotal(this.props.total)}
                 </div>
             </div>
         )

@@ -22,52 +22,66 @@ class App extends Component {
       currentQuantity: "",
       currentOrder: [],
       selected: "",
+      total: [],
     }
   }
 
-  onSelect = (e) => {
+  onSelect = (event) => {
     this.setState({
-      selected: e.target.value
+      selected: event.target.value
     })
   }
 
-  onChange = (e) => {
+  onChange = (event) => {
     this.setState({
-      currentQuantity: e.target.value
+      currentQuantity: event.target.value
     })
+  }
+
+  getTotal = (totals) => {
+    const result = totals.length > 1 ? totals.reduce((a, b) => {return a + b}, 0) : totals[0]
+    // console.log("total", this.state.total)
+    // console.log("current order", this.state.currentOrder)
+    // console.log("result", result)
+    return <h4>Total: ${(result / 100).toFixed(2)}</h4>
   }
 
   onSubmit = (event) => { 
-    event.preventDefault()
+    event.preventDefault() 
     const order = {
       product: {
         id: this.state.product.length + 1,
-        name: this.state.product.name,
+        name: this.state.selected,
         price: this.state.product.priceInCents
       },
-      quantity: 0
+      quantity: this.state.currentQuantity
     }
-    const price = this.state.product.filter((data, idx) => {
+    const price = this.state.product.filter(data => {
       if(this.state.selected === data.name) {
         order.product.id = data.id
         order.product.name = this.state.selected
         order.product.price = (data.priceInCents * this.state.currentQuantity) 
         order.quantity = this.state.currentQuantity
+        // this.setState({
+        //   total: [...this.state.total, order.product.price]
+        // }, console.log("total updated to:", this.state.total))
       }
     })
     this.setState({
-      currentOrder: this.state.currentOrder.concat(order)
+      currentOrder: this.state.currentOrder.concat(order),
+      total: [...this.state.total, order.product.price]
     })
   }
 
   render() {
-    console.log("selected", this.state.selected)
+    // console.log("selected", this.state.selected)
+
     let copyright = '\u00A9'
     let crDate = 2018
     return (
       <div>
         <Header />
-        <CartItems cartItemList={ this.state.currentOrder } />
+        <CartItems cartItemList={ this.state.currentOrder } getTotal={ this.getTotal } total={ this.state.total }/>
         <AddItem products={ this.state.product } onSubmit={ this.onSubmit } onChange={ this.onChange } onSelect={this.onSelect} />
         <CartFooter copyright={ copyright } crDate={ crDate } />
       </div>

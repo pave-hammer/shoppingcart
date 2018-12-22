@@ -8,7 +8,6 @@ class AddItem extends Component {
 
     render() {
         let text = "Products..."
-        // console.log("props:", this.props)
         return (
             <form>
                 <div className="container">
